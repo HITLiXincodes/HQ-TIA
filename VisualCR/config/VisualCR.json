@@ -1,0 +1,64 @@
+{
+    "name": "lfw",
+    "gpu_ids": [
+        0
+    ],
+    "path": { 
+        "stage": "train", 
+        "log": "logs",
+        "results": "results",
+        "checkpoint": "checkpoint",
+        "resume_state": "/home/ubuntu/FR_Attack/stage2/adaface/experiments_train/agedb_260418_083007/checkpoint/I400000_E204"
+        },
+    "datasets": {
+        "train": {
+            "name": "VisualCR",
+            "input_root": "/home/ubuntu/FR_Attack/coarse_images/adaface/training/fake",
+            "target_root": "/home/ubuntu/FR_Attack/coarse_images/target/real_train",
+            "template_root": "/home/ubuntu/FR_Attack/real_template/train/adaface",
+            "batch_size": 32,
+            "num_workers": 8,
+            "use_shuffle": true,
+            "data_len": -1 
+            },
+        "val": {
+            "name": "VisualCR",
+            "input_root": "/home/ubuntu/FR_Attack/coarse_images/adaface/lfw/images",
+            "target_root": "/home/ubuntu/FR_Attack/coarse_images/target/real_lfw",
+            "template_root": "/home/ubuntu/FR_Attack/real_template/adaface/lfw",
+            "data_len": -1 
+        }
+    },
+    "model": {
+        "finetune_norm": false,
+        "beta_schedule": { 
+            "train": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            },
+            "val": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            }
+        },
+        "diffusion": {
+            "image_size": 112,
+            "channels": 3, 
+            "template_dim": 512,
+            "ddim_steps": 1
+        }
+    },
+    "train": {
+        "n_iter": 400000,
+        "val_freq": 10000,
+        "save_checkpoint_freq": 10000,
+        "print_freq": 10000,
+        "optimizer": {
+            "lr": 1e-4
+        }
+    }
+}
