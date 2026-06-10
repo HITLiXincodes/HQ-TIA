@@ -1,0 +1,60 @@
+{
+  "paths": {
+    "dataset_dir": "dataroots,including images and embeddings folders",
+    "training_output_dir": "  ",
+    "face_parsing_dir": "  ",
+    "face_parsing_checkpoint": "  ",
+    "face_system_dir": "facesystem"
+  },
+  "train": {
+    "device": "auto",
+    "batch_size": 48,
+    "num_workers": 0,
+    "train_test_split": 0.9,
+    "num_epochs": 100,
+    "learning_rate": 0.0001,
+    "lr_step_size": 50,
+    "lr_gamma": 0.5,
+    "eval_image_limit": 500,
+    "model_save_interval": 10,
+    "save_all_after_epoch": 90,
+    "face_parse_start_epoch": 40,
+    "crop_ratio": 0.75,
+    "perceptual_loss_weight": 0.001
+  },
+  "face_system": {
+    "device": "auto",
+    "adaface_architecture": "ir_50",
+    "adaface_checkpoint": "facesystem/pretrained/adaface_ir50_ms1mv2.ckpt"
+  },
+  "image_generation": {
+    "device": "auto",
+    "dataset_dir": "data/agedb/adaface_112",
+    "checkpoint": "checkpoints/Generator_91.pth",
+    "batch_size": 128,
+    "num_workers": 0,
+    "train_test_split": 1.0,
+    "real_output_dir": "outputs/agedb/real_agedb",
+    "fake_output_dir": "outputs/agedb/fake_agedb"
+  },
+  "embedding_generation": {
+    "input_root": "outputs/agedb/fake_agedb",
+    "target_root": "outputs/agedb/real_agedb",
+    "fake_embedding_output_dir": "outputs/agedb/embeddings/fake",
+    "real_embedding_output_dir": "outputs/agedb/embeddings/real"
+  },
+  "metrics": {
+    "ref_dir": "outputs/agedb/real_agedb",
+    "gen_dir": "outputs/agedb/fake_agedb",
+    "device": "auto",
+    "batch_size": 256,
+    "num_workers": 0,
+    "output_json": null,
+    "output_txt": "outputs/metrics/metrics.txt"
+  },
+  "attack_metrics": {
+    "real_embedding_root": "outputs/agedb/embeddings/real",
+    "fake_embedding_root": "outputs/agedb/embeddings/fake",
+    "output_csv": "outputs/metrics/attack_results.csv"
+  }
+}
